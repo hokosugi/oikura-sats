@@ -1,0 +1,29 @@
+{
+  "canisters": {
+    "osatsu_sats_backend": {
+      "main": "src/osatsu_sats_backend/main.mo",
+      "type": "motoko"
+    },
+    "osatsu_sats_frontend": {
+      "dependencies": [
+        "osatsu_sats_backend"
+      ],
+      "frontend": {
+        "entrypoint": "src/osatsu_sats_frontend/src/index.html"
+      },
+      "source": [
+        "src/osatsu_sats_frontend/assets",
+        "dist/osatsu_sats_frontend/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}

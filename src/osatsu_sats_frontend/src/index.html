@@ -77,7 +77,7 @@
         <div class="main">
             <div class="main-bgcolor">
                 <div class="title-flex">
-                    <a href="https://lokuyow.github.io/sats-rate/" aria-label="おいくらckサッツ">
+                    <a aria-label="おいくらckサッツ">
                         <h3>ICP</h3><img class="title" src="title.svg" alt="おいくらckサッツ" width="224px" height="28.469px" />
                         <img class="icon" src="ckBTC/ckBTC.jpeg" alt="アイコン" />
                     </a>
@@ -133,14 +133,14 @@
                     </button>
 
                     <button class="currency-icons" id="copy-icpJpy" data-currency="icpJpy">
-                        <img src="euro.svg" alt="ユーロ" width="36px" height="36px">
+                        <img src="icp.svg" alt="icp" width="36px" height="36px">
                     </button>
                     <input type="text" id="icpJpy" aria-label="ICPの金額" oninput="calculateValues('icpJpy')"
                         pattern="^([1-9]\d*|0)(\.\d+)?$" inputmode="decimal">
                     <button class="currency-units" id="paste-icpJpy" data-currency="icpJpy">
-                        ICP
+                        JPY
                     </button>
-
+                    
                     <button id="update-prices" aria-label="価格の更新">
                         <svg xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -179,10 +179,10 @@
             <div class="flex-descriptions">
                 <div class="description-bgcolor">
                     <div class="description">
-                        ビットコイン（bitcoin, BTC）<br>
-                        サッツ（Sats, Sat, Satoshi）、日本円（JPY）<br>
+                        ckビットコイン（ckbitcoin, ckBTC）<br>
+                        ckサッツ（ckSats, ckSat, ckSatoshi）、日本円（JPY）<br>
                         米ドル（USD）、ユーロ（EUR）の<br>
-                        相互換算ツールです。<br>
+                        相互換算ツールです。ICP-JPYもね。<br>
                     </div>
                 </div>
                 <div class="satoshi-bgcolor">
@@ -191,13 +191,13 @@
                             Satoshi (単位)</a>
                     </div>
                     <div class="table">
-                        1億 sats = 1 BTC<br>
-                        1 sat = 0.00000001 BTC
+                        1億 sats = 1 ckBTC<br>
+                        1 sat = 0.00000001 ckBTC
                     </div>
                 </div>
             </div>
 
-            <div class="zap-bgcolor">
+            <!-- <div class="zap-bgcolor">
                 <div class="zap-subject">
                     サイト制作者にZap
                 </div>
@@ -218,14 +218,14 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <footer class="footer">
+        <!-- <footer class="footer">
             サイト制作：ロクヨウ<br>
             ソースコード：<a href="https://github.com/Lokuyow/sats-rate" target="_blank">GitHub</a><br>
             データ提供：<a href="https://www.coingecko.com" target="_blank">CoinGecko</a><br>
             <div>おいくらサッツ：Version 1.33</div>
-        </footer>
+        </footer> -->
     </div>
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/nostr-zap@0.21.0"></script> -->

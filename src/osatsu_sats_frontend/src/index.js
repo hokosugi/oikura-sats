@@ -33,10 +33,11 @@ const currencyFormatOptions = {
     btc: { maximumFractionDigits: 8, minimumFractionDigits: 0 },
     jpy: { maximumFractionDigits: 3, minimumFractionDigits: 0 },
     usd: { maximumFractionDigits: 5, minimumFractionDigits: 0 },
-    eur: { maximumFractionDigits: 5, minimumFractionDigits: 0 }
+    eur: { maximumFractionDigits: 5, minimumFractionDigits: 0 },
+    icpJpy: { maximumFractionDigits: 9, minimumFractionDigits: 0 }
 };
 const significantDigits = 10;
-let btcToJpy, btcToUsd, btcToEur, lastUpdatedField;
+let btcToJpy, btcToUsd, btcToEur, icpToJpy, lastUpdatedField;
 let lastUpdatedTimestamp = null;
 let touchStartTime = 0;
 let longPressed = false;
@@ -81,18 +82,18 @@ async function initializeApp() {
 //         updateElementClass(getDomElementById('update-prices'), false);
 //     }
 // }
+
 async function fetchDataFromCoinGecko() {
     let data;
-
+    let data_icp;
     try {
         const response_bitcoin = await osatsu_sats_backend.get_bitcoin_exchange();
         console.log(response_bitcoin);
         // const res_bitcoin = JSON.parse(response_bitcoin);
-        // const response_icp = await osatsu_sats_backend.get_icp_exchange();
-        // const res_icp = JSON.parse(response_icp);
-        // console.log(res_icp);
-        // console.log("data::" + data[0].bitcoin.jpy);
-        // console.log("data::::" + data[1].internet-computer.jpy);
+        const response_icp = await osatsu_sats_backend.get_icp_exchange();
+        const res = response_icp.replace('-', '_');
+        data_icp = JSON.parse(res);
+        console.log("icpJpy::" + data_icp.internet_computer.jpy);
         // data = {bitcoin: {jpy: 4910700.12556, usd: 27122.94946, eur: 25343.19576, last_updated_at: 1695211807}};
         data = JSON.parse(response_bitcoin);
         
@@ -101,7 +102,8 @@ async function fetchDataFromCoinGecko() {
     }
 
     if (data) {
-        updateCurrencyRates(data);
+        updateCurrencyRates(data, data_icp);
+        // console.log("data_icp.internet_computer.jpy:::"+data_icp.internet_computer.jpy);
         updateLastUpdated(data.bitcoin.last_updated_at);
         updateElementClass(getDomElementById('last-updated'), false);
     }
@@ -153,11 +155,11 @@ function setDefaultValues() {
     }
 }
 
-function updateCurrencyRates(data) {
+function updateCurrencyRates(data, data_icp) {
     btcToJpy = data.bitcoin.jpy;
     btcToUsd = data.bitcoin.usd;
     btcToEur = data.bitcoin.eur;
-    // icpToJpy = res_icp[0].jpy;
+    icpToJpy = data_icp.internet_computer.jpy;
 }
 
 function getInputValue(id) {
@@ -172,7 +174,7 @@ function calculateValues(inputField) {
         jpy: getInputValue('jpy'),
         usd: getInputValue('usd'),
         eur: getInputValue('eur'),
-        // icpJpy: getInputValue('icpJpy')
+        icpJpy: getInputValue('icpJpy')
     };
 
     switch (inputField) {
@@ -181,47 +183,47 @@ function calculateValues(inputField) {
             values.jpy = values.btc * btcToJpy;
             values.usd = values.btc * btcToUsd;
             values.eur = values.btc * btcToEur;
-            // values.icpJpy = values.icpJpy * icpToJpy;
+            values.icpJpy = values.icpJpy * icpToJpy;
             break;
         case 'sats':
             values.btc = values.sats / satsInBtc;
             values.jpy = values.btc * btcToJpy;
             values.usd = values.btc * btcToUsd;
             values.eur = values.btc * btcToEur;
-            // values.icpJpy = values.icpJpy * icpToJpy;
+            values.icpJpy = icpToJpy;
             break;
         case 'jpy':
             values.btc = values.jpy / btcToJpy;
             values.sats = values.btc * satsInBtc;
             values.usd = values.btc * btcToUsd;
             values.eur = values.btc * btcToEur;
-            // values.icpJpy = values.icpJpy * icpToJpy;
+            values.icpJpy = values.icpJpy * icpToJpy;
             break;
         case 'usd':
             values.btc = values.usd / btcToUsd;
             values.sats = values.btc * satsInBtc;
             values.jpy = values.btc * btcToJpy;
             values.eur = values.btc * btcToEur;
-            // values.icpJpy = values.icpJpy * icpToJpy;
+            values.icpJpy = values.icpJpy * icpToJpy;
             break;
         case 'eur':
             values.btc = values.eur / btcToEur;
             values.sats = values.btc * satsInBtc;
             values.jpy = values.btc * btcToJpy;
             values.usd = values.btc * btcToUsd;
-            // values.icpJpy = values.icpJpy * icpToJpy;
+            values.icpJpy = values.icpJpy * icpToJpy;
             break;
-        // case 'icpJpy':
-        //     values.btc = values.eur / btcToEur;
-        //     values.sats = values.btc * satsInBtc;
-        //     values.jpy = values.btc * btcToJpy;
-        //     values.usd = values.btc * btcToUsd;
-        //     values.icpJpy = values.icpJpy * icpToJpy;
-        //     break;
+        case 'icpJpy':
+            values.btc = values.eur / btcToEur;
+            values.sats = values.btc * satsInBtc;
+            values.jpy = values.btc * btcToJpy;
+            values.usd = values.btc * btcToUsd;
+            values.eur = values.btc * btcToEur;
+            break;
         default:
             console.error("Unknown inputField:", inputField);
             return;
-    }
+    };
 
     inputFields.forEach(id => {
         if (id === inputField) {
@@ -229,12 +231,12 @@ function calculateValues(inputField) {
             const caretPos = element.selectionStart;
             element.setSelectionRange(caretPos, caretPos);
         } else {
+            // console.log("values."+"%s"+"= inputField"+"%s"+"::"+values[id], id, inputField);
             getDomElementById(id).value = formatCurrency(values[id], id, selectedLocale, currencyFormatOptions);
         }
     });
-
     lastUpdatedField = inputField;
-    updateShareButton(values.btc, values.sats, values.jpy, values.usd, values.eur);
+    updateShareButton(values.btc, values.sats, values.jpy, values.usd, values.eur, values.icpJpy);
 }
 
 // キー入力
@@ -427,7 +429,7 @@ function loadValuesFromQueryParams() {
     const decimalFormat = urlParams.get('d') || 'p'; // dパラメータから小数点のフォーマット情報を取得
     const locale = decimalFormat === 'c' ? 'de-DE' : 'en-US'; // dパラメータに基づいてロケールを設定
 
-    ['btc', 'sats', 'jpy', 'usd', 'eur'].forEach(field => {
+    ['btc', 'sats', 'jpy', 'usd', 'eur', 'icpJpy'].forEach(field => {
         if (urlParams.has(field)) {
             const element = getDomElementById(field);
             const rawValue = urlParams.get(field);
@@ -501,7 +503,7 @@ function getCurrencyText(key, value, baseCurrencyKey) {
 
 // 共有ボタン
 function updateShareButton(btc, sats, jpy, usd, eur) {
-    const values = { btc, sats, jpy, usd, eur };
+    const values = { btc, sats, jpy, usd, eur, icpJpy};
 
     const shareText = generateCopyText(values);
     const queryParams = generateQueryStringFromValues();

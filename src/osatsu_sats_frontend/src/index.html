@@ -1,24 +1,235 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>osatsu_sats</title>
-    <base href="/" />
-    <link rel="icon" href="favicon.ico" />
-    <link type="text/css" rel="stylesheet" href="main.css" />
-  </head>
-  <body>
-    <main>
-      <img src="logo2.svg" alt="DFINITY logo" />
-      <br />
-      <br />
-      <form action="#">
-        <label for="name">Enter your name: &nbsp;</label>
-        <input id="name" alt="Name" type="text" />
-        <button type="submit">Click Me!</button>
-      </form>
-      <section id="greeting"></section>
-    </main>
-  </body>
+<html lang="ja">
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+    <title>おいくらサッツ</title>
+    
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <!-- <link rel="manifest" href="./manifest.json"> -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#B3475F" />
+    <meta name="description"
+        content="ビットコイン（bitcoin, BTC）、サッツ（Sats, Sat, Satoshi）、日本円（JPY）、米ドル（USD）、ユーロ（EUR）の相互換算ツールです。最新の為替レートを取得し計算、瞬時に表示します。">
+
+    <meta property="og:site_name" content="おいくらサッツ">
+    <meta property="og:title" content="おいくらサッツ">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lokuyow.github.io/sats-rate/">
+    <meta property="og:image" content="https://lokuyow.github.io/sats-rate/images/ogp.png">
+    <meta property="og:description" content="ビットコイン、サッツ、日本円、米ドル、ユーロの換算ツール">
+    <meta property="og:locale" content="ja_JP">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@Lokuyow">
+
+    <!-- Google tag (gtag.js) -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-0N6MG239RG"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-0N6MG239RG');
+    </script> -->
+
+    <link rel="icon" type="image/vnd.microsoft.icon" href="./favicons/favicon.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="./favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="./favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="./favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="./favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="./favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="./favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="./favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="./favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="36x36" href="./favicons/android-chrome-36x36.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="./favicons/android-chrome-48x48.png">
+    <link rel="icon" type="image/png" sizes="72x72" href="./favicons/android-chrome-72x72.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="./favicons/android-chrome-96x96.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="./favicons/android-chrome-128x128.png">
+    <link rel="icon" type="image/png" sizes="144x144" href="./favicons/android-chrome-144x144.png">
+    <link rel="icon" type="image/png" sizes="152x152" href="./favicons/android-chrome-152x152.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="./favicons/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="256x256" href="./favicons/android-chrome-256x256.png">
+    <link rel="icon" type="image/png" sizes="384x384" href="./favicons/android-chrome-384x384.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="./favicons/android-chrome-512x512.png">
+    <link rel="icon" type="image/png" sizes="36x36" href="./favicons/icon-36x36.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="./favicons/icon-48x48.png">
+    <link rel="icon" type="image/png" sizes="72x72" href="./favicons/icon-72x72.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="./favicons/icon-96x96.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="./favicons/icon-128x128.png">
+    <link rel="icon" type="image/png" sizes="144x144" href="./favicons/icon-144x144.png">
+    <link rel="icon" type="image/png" sizes="152x152" href="./favicons/icon-152x152.png">
+    <link rel="icon" type="image/png" sizes="160x160" href="./favicons/icon-160x160.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="./favicons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="196x196" href="./favicons/icon-196x196.png">
+    <link rel="icon" type="image/png" sizes="256x256" href="./favicons/icon-256x256.png">
+    <link rel="icon" type="image/png" sizes="384x384" href="./favicons/icon-384x384.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="./favicons/icon-512x512.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicons/icon-16x16.png">
+    <link rel="icon" type="image/png" sizes="24x24" href="./favicons/icon-24x24.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicons/icon-32x32.png">
+</head>
+
+<body>
+    <div class="page">
+        <div class="main">
+            <div class="main-bgcolor">
+                <div class="title-flex">
+                    <a href="https://lokuyow.github.io/sats-rate/" aria-label="おいくらckサッツ">
+                        <h3>ICP</h3><img class="title" src="title.svg" alt="おいくらckサッツ" width="224px" height="28.469px" />
+                        <img class="icon" src="ckBTC/ckBTC.jpeg" alt="アイコン" />
+                    </a>
+                </div>
+                <div class="grid-container">
+                    <img class="copy-icon" src="copy-regular.svg" alt="コピー" width="20px" height="20px">
+                    <div class="date" id="last-updated"></div>
+                    <img class="paste-icon" src="paste-regular.svg" alt="ペースト" width="20px" height="20px">
+
+                    <button class="currency-icons" id="copy-sats" data-currency="sats">
+                        <img src="bitcoin.svg" alt="ビットコイン（サッツ）" width="36px" height="36px">
+                    </button>
+                    <input type="text" id="sats" aria-label="ビットコイン（サッツ）の金額" oninput="calculateValues('sats')"
+                        pattern="^([1-9]\d*|0)(\.\d+)?$" inputmode="decimal">
+                    <button class="currency-units" id="paste-sats" data-currency="sats">
+                        sats
+                    </button>
+
+                    <button class="currency-icons" id="copy-btc" data-currency="btc">
+                        <img src="bitcoin.svg" alt="ビットコイン" width="36px" height="36px">
+                    </button>
+                    <input type="text" id="btc" aria-label="ビットコインの金額" oninput="calculateValues('btc')"
+                        pattern="^([1-9]\d*|0)(\.\d+)?$" inputmode="decimal">
+                    <button class="currency-units" id="paste-btc" data-currency="btc">
+                        BTC
+                    </button>
+
+                    <button class="currency-icons" id="copy-jpy" data-currency="jpy">
+                        <img src="yen.svg" alt="日本円" width="36px" height="36px">
+                    </button>
+                    <input type="text" id="jpy" aria-label="日本円の金額" oninput="calculateValues('jpy')"
+                        pattern="^([1-9]\d*|0)(\.\d+)?$" inputmode="decimal">
+                    <button class="currency-units" id="paste-jpy">
+                        JPY
+                    </button>
+
+                    <button class="currency-icons" id="copy-usd" data-currency="usd">
+                        <img src="dollar.svg" alt="アメリカドル" width="36px" height="36px">
+                    </button>
+                    <input type="text" id="usd" aria-label="アメリカドルの金額" oninput="calculateValues('usd')"
+                        pattern="^([1-9]\d*|0)(\.\d+)?$" inputmode="decimal">
+                    <button class="currency-units" id="paste-usd" data-currency="usd">
+                        USD
+                    </button>
+
+                    <button class="currency-icons" id="copy-eur" data-currency="eur">
+                        <img src="euro.svg" alt="ユーロ" width="36px" height="36px">
+                    </button>
+                    <input type="text" id="eur" aria-label="ユーロの金額" oninput="calculateValues('eur')"
+                        pattern="^([1-9]\d*|0)(\.\d+)?$" inputmode="decimal">
+                    <button class="currency-units" id="paste-eur" data-currency="eur">
+                        EUR
+                    </button>
+
+                    <button class="currency-icons" id="copy-icpJpy" data-currency="icpJpy">
+                        <img src="euro.svg" alt="ユーロ" width="36px" height="36px">
+                    </button>
+                    <input type="text" id="icpJpy" aria-label="ICPの金額" oninput="calculateValues('icpJpy')"
+                        pattern="^([1-9]\d*|0)(\.\d+)?$" inputmode="decimal">
+                    <button class="currency-units" id="paste-icpJpy" data-currency="icpJpy">
+                        ICP
+                    </button>
+
+                    <button id="update-prices" aria-label="価格の更新">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                            <path
+                                d="M142.9 142.9c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5c0 0 0 0 0 0H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5c7.7-21.8 20.2-42.3 37.8-59.8zM16 312v7.6 .7V440c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2l41.6-41.6c87.6 86.5 228.7 86.2 315.8-1c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.2 62.2-162.7 62.5-225.3 1L185 329c6.9-6.9 8.9-17.2 5.2-26.2s-12.5-14.8-22.2-14.8H48.4h-.7H40c-13.3 0-24 10.7-24 24z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="share-bgcolor">
+                <div class="sns-subject">
+                    SNSに共有
+                </div>
+                <div class="sns">
+                    <a href="#" id="share-twitter" target="_blank">
+                        <img src="square-x-twitter.svg" alt="Twitter" width="38px" height="38px">
+                    </a>
+                    <a href="#" id="share-nostter" target="_blank">
+                        <img src="nostr-icon-purple-on-white.svg" alt="nostter（Nostr）" width="50px"
+                            height="50px">
+                    </a>
+                    <a href="#" id="share-mass-driver" target="_blank">
+                        <img src="cloud-solid.svg" alt="Mass Driver（Bluesky）" width="38px" height="38px">
+                    </a>
+                    <button id="share-via-webapi">
+                        <img src="share-nodes-solid.svg" alt="共有" width="35px" height="35px">
+                    </button>
+                    <button id="copy-to-clipboard">
+                        <img src="clipboard-solid.svg" alt="クリップボード" width="34px" height="34px">
+                    </button>
+                    <div id="notification"></div>
+                </div>
+            </div>
+
+            <div class="flex-descriptions">
+                <div class="description-bgcolor">
+                    <div class="description">
+                        ビットコイン（bitcoin, BTC）<br>
+                        サッツ（Sats, Sat, Satoshi）、日本円（JPY）<br>
+                        米ドル（USD）、ユーロ（EUR）の<br>
+                        相互換算ツールです。<br>
+                    </div>
+                </div>
+                <div class="satoshi-bgcolor">
+                    <div class="link">
+                        <a href="https://lostinbitcoin.jp/glossary/glossary-sa/#satoshi" target="_blank">Sats, Sat,
+                            Satoshi (単位)</a>
+                    </div>
+                    <div class="table">
+                        1億 sats = 1 BTC<br>
+                        1 sat = 0.00000001 BTC
+                    </div>
+                </div>
+            </div>
+
+            <div class="zap-bgcolor">
+                <div class="zap-subject">
+                    サイト制作者にZap
+                </div>
+                <div class="zap">
+                    <button id="nostr-zap-target" aria-label="Zap(ビットコインの投げ銭)ボタン"
+                        data-npub="npub1a3pvwe2p3v7mnjz6hle63r628wl9w567aw7u23fzqs062v5vqcqqu3sgh3"
+                        data-note-id="note1pqk7a5j2lc2rduz4k4468xgsccg5sru8uja7uvxr6eh9zwz0xtlqh5y9ly"
+                        data-relays="wss://relay.nostr.band,wss://nos.lol,wss://nostr.bitcoiner.social,wss://yabu.me,wss://nostr-relay.nokotaro.com,wss://relay.nostr.wirednet.jp">
+                        <div>Zap</div>
+                        <img src="bolt-solid.svg" alt="Zapマーク" width="28px" height="28px">
+                    </button>
+                    <div class="zap-list">
+                        <a href="https://nostr.band/note1pqk7a5j2lc2rduz4k4468xgsccg5sru8uja7uvxr6eh9zwz0xtlqh5y9ly/zaps"
+                            target="_blank">Zap一覧</a>
+                    </div>
+                    <div class="zap-description">
+                        <a href="https://scrapbox.io/nostr/Zap" target="_blank">Zapとは</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            サイト制作：ロクヨウ<br>
+            ソースコード：<a href="https://github.com/Lokuyow/sats-rate" target="_blank">GitHub</a><br>
+            データ提供：<a href="https://www.coingecko.com" target="_blank">CoinGecko</a><br>
+            <div>おいくらサッツ：Version 1.33</div>
+        </footer>
+    </div>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/nostr-zap@0.21.0"></script> -->
+    <script src="./index.js"></script>
+</body>
+
 </html>

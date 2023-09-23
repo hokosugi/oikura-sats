@@ -3,7 +3,10 @@
     "osatsu_sats_backend": {
       "main": "src/osatsu_sats_backend/main.mo",
       "type": "motoko"
+      
     },
+   
+    
     "osatsu_sats_frontend": {
       "dependencies": [
         "osatsu_sats_backend"

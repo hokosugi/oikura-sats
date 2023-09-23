@@ -1,37 +1,406 @@
+:root {
+    --main-font: -apple-system, BlinkMacSystemFont, Helvetica Neue, Segoe UI, Hiragino Kaku Gothic ProN, Hiragino Sans, ヒラギノ角ゴ ProN W3, Arial, メイリオ, Meiryo, sans-serif;
+}
+
+* {
+    font-family: inherit;
+}
+
 body {
-    font-family: sans-serif;
-    font-size: 1.5rem;
+    background-color: #F5F4F2;
+    font-family: var(--main-font);
+    color: #4D4846;
+    margin: 12px;
 }
 
-img {
-    max-width: 50vw;
-    max-height: 25vw;
-    display: block;
-    margin: auto;
-}
-
-form {
+.page {
     display: flex;
+    flex-direction: column;
+    height: calc(100vh - 25px);
+}
+
+.main {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-bgcolor {
+    background-color: rgb(255, 255, 255);
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 40rem;
+    margin: 0 0 0.3rem 0;
+    padding: 1.2rem 0 1.5rem 0;
+}
+
+.title-flex {
+    display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 0.5em;
-    flex-flow: row wrap;
-    max-width: 40vw;
-    margin: auto;
-    align-items: baseline;
+    margin: 0 0 1rem 0;
+    padding: 0 0 0 0;
+
+    & a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .title {
+            margin-left: 1rem;
+        }
+
+        .icon {
+            width: 70px;
+            height: 70px;
+            margin-left: 0.8rem;
+            margin-bottom: 1rem;
+            border-radius: 40%;
+        }
+    }
 }
 
-button[type="submit"] {
-    padding: 5px 20px;
-    margin: 10px auto;
-    float: right;
+.grid-container {
+    display: grid;
+    grid-template-columns: 70px auto 60px;
+    grid-template-rows: 0.5fr 1fr 1fr 1fr 1fr 1fr 0.6fr;
+    row-gap: 6px;
+    align-items: center;
+    max-width: 32rem;
+    margin: 0 auto;
 }
 
-#greeting {
-    margin: 10px auto;
-    padding: 10px 60px;
-    border: 1px solid #222;
+.copy-icon {
+    justify-self: end;
+    margin: 5px 18px 0 0;
+    align-self: center;
 }
 
-#greeting:empty {
-    display: none;
+.date {
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.date.outdated {
+    color: #E0DFDA;
+}
+
+.date.recent {
+    color: #4D4846;
+}
+
+.paste-icon {
+    justify-self: start;
+    margin: 5px 0 0 10px;
+    align-self: center;
+}
+
+.currency-icons {
+    justify-self: end;
+    cursor: pointer;
+    background: none;
+    border: 1px solid #E0DFDA;
+    border-right: 0;
+    border-radius: 10px 0 0 10px;
+    padding: 0;
+    margin: 0 0 0 0;
+    outline: none;
+    font-size: 0;
+    width: 80%;
+    height: 100%;
+}
+
+.grid-container input:nth-child(5) {
+    border-left: 2px solid #fcd303;
+}
+
+.grid-container input:nth-child(5):focus {
+    outline: 2px solid #fcd303;
+    outline-offset: -2px;
+}
+
+.grid-container input:nth-child(8) {
+    border-left: 2px solid #F7931A;
+}
+
+.grid-container input:nth-child(8):focus {
+    outline: 2px solid #F7931A;
+    outline-offset: -2px;
+}
+
+.grid-container input:nth-child(3n+11) {
+    border-left: 2px solid #D95773;
+}
+
+.grid-container input:nth-child(3n+11):focus {
+    outline: 2px solid #D95773;
+    outline-offset: -2px;
+}
+
+.currency-icons img {
+    justify-self: center;
+}
+
+button>img,
+button>svg {
+    pointer-events: none;
+}
+
+.grid-container input {
+    font-family:
+        'San Francisco',
+        -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        Roboto,
+        Calibri,
+        Helvetica,
+        Arial,
+        sans-serif;
+    color: #262322;
+    font-size: 2rem;
+    height: 68px;
+    border: 1px solid #E0DFDA;
+    text-align: right;
+    min-width: 140px;
+    padding: 0 10px 0 0;
+}
+
+.currency-units {
+    color: #4D4846;
+    font-size: 1.15rem;
+    font-weight: 600;
+    text-align: center;
+    align-self: center;
+    margin: 0 0 0 0;
+    cursor: pointer;
+    background: none;
+    padding: 0 3px 0 0;
+    border: 1px solid #E0DFDA;
+    border-left: 0;
+    border-radius: 0 10px 10px 0;
+    width: 80%;
+    height: 100%;
+}
+
+
+#update-prices {
+    visibility: hidden;
+    cursor: pointer;
+    background: none;
+    border-radius: 8px;
+    margin: 0 10px 0 14px;
+    padding: 0 0 0 0;
+    outline: none;
+    font-size: 0;
+    width: auto;
+    height: 100%;
+    grid-column: 1 / -1;
+}
+
+#update-prices.outdated {
+    border: 1px solid #4D4846;
+    fill: #4D4846;
+}
+
+#update-prices.recent {
+    border: 1px solid #E0DFDA;
+    fill: #E0DFDA;
+}
+
+#update-prices svg {
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+}
+
+#update-prices:active {
+    transform: scale(0.95);
+}
+
+@keyframes rotateAnimation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.rotated {
+    animation: rotateAnimation 0.8s forwards;
+}
+
+
+.share-bgcolor {
+    background-color: rgb(255, 255, 255);
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 40rem;
+    margin: 0.3rem 0;
+    padding: 1.8rem 0;
+}
+
+.sns-subject {
+    font-weight: 600;
+    text-align: center;
+    margin: -0.5rem 0 0.8rem 0;
+}
+
+.sns {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.sns img {
+    margin-bottom: -0.5rem;
+    cursor: pointer;
+}
+
+.sns button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+}
+
+.zap-bgcolor {
+    background-color: rgb(255, 255, 255);
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 40rem;
+    margin: 0.3rem 0;
+    padding: 1.8rem 0;
+}
+
+.zap-subject {
+    font-weight: 600;
+    text-align: center;
+    margin: -8px 0 16px 0;
+}
+
+.zap {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#nostr-zap-target {
+    display: flex;
+    color: #4D4846;
+    background-color: #ffffff;
+    border: 1px solid #E0DFDA;
+    border-radius: 10px;
+    cursor: pointer;
+    align-items: center;
+    padding: 12px 22px;
+
+    & div {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    & img {
+        margin: 0 0 0 2px;
+    }
+}
+
+#notification {
+    position: absolute;
+    visibility: hidden;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    font-size: 0.8rem;
+    color: #333;
+    white-space: nowrap;
+}
+
+.flex-descriptions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 40rem;
+}
+
+.description-bgcolor,
+.satoshi-bgcolor {
+    background-color: rgb(255, 255, 255);
+    border-radius: 1rem;
+    margin: 0.3rem 0;
+    padding: 1.2rem 0rem;
+}
+
+.description,
+.link,
+.table {
+    font-size: 0.9rem;
+    text-align: left;
+    margin: 0 0 0 12%;
+}
+
+
+footer {
+    flex-shrink: 0;
+    text-align: right;
+    font-size: 0.85rem;
+    margin: 2rem 0.25rem 0 0;
+}
+
+footer div {
+    margin-bottom: 4px;
+}
+
+.update-notice {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 2, 1, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.update-notice-box {
+    background-color: rgb(255, 255, 255);
+    color: #4D4846;
+    text-align: center;
+    padding: 1rem 1rem;
+    border-radius: 0.8rem;
+    width: 80%;
+    max-width: 400px;
+}
+
+.update-notice h3 {
+    margin: 1rem
+}
+
+.update-notice p {
+    margin: 0.5rem 0;
+}
+
+#updateBtn {
+    background-color: rgb(247, 147, 26);
+    color: rgb(255, 255, 255);
+    border: none;
+    margin: 1rem;
+    padding: 1.2rem 2rem;
+    border-radius: 0.8rem;
+    cursor: pointer;
+}
+
+#updateBtn:hover {
+    background-color: rgb(217, 130, 24);
+}
+
+button {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }

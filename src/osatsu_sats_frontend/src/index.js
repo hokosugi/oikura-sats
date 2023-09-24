@@ -1,6 +1,6 @@
 import { osatsu_sats_backend } from "../../declarations/osatsu_sats_backend";
 
-// document.querySelector("form").addEventListener("submit", async (e) => {
+
 //   e.preventDefault();
 //   const button = e.target.querySelector("button");
 
@@ -17,7 +17,7 @@ import { osatsu_sats_backend } from "../../declarations/osatsu_sats_backend";
 
 //   return false;
 // });
-
+// デプロイしたらURLを変更する（予定）
 const BASE_URL = "https://lokuyow.github.io/sats-rate/";
 const satsInBtc = 1e8;
 const inputFields = ['sats', 'btc', 'jpy', 'usd', 'eur', 'icpJpy'];
@@ -34,7 +34,7 @@ const currencyFormatOptions = {
     jpy: { maximumFractionDigits: 3, minimumFractionDigits: 0 },
     usd: { maximumFractionDigits: 5, minimumFractionDigits: 0 },
     eur: { maximumFractionDigits: 5, minimumFractionDigits: 0 },
-    icpJpy: { maximumFractionDigits: 9, minimumFractionDigits: 0 }
+    icpJpy: { maximumFractionDigits: 10, minimumFractionDigits: 0 }
 };
 const significantDigits = 10;
 let btcToJpy, btcToUsd, btcToEur, icpToJpy, lastUpdatedField;
@@ -57,8 +57,7 @@ async function initializeApp() {
     document.addEventListener('visibilitychange', handleVisibilityChange);
     window.addEventListener('online', handleOnline);
 }
-
-// このdataのJson形式は84行目に合わしてあります
+// 今回は利用せず
 // async function get_xrc_rating() {
 //     const BTC_rating = await osatsu_sats_backend.get_exchange_rate('BTC');
 //     const ICP_rating = await osatsu_sats_backend.get_exchange_rate('ICP');
@@ -85,17 +84,17 @@ async function initializeApp() {
 
 async function fetchDataFromCoinGecko() {
     let data;
+    // BTCに追加してICP
     let data_icp;
     try {
         const response_bitcoin = await osatsu_sats_backend.get_bitcoin_exchange();
-        console.log(response_bitcoin);
-        // const res_bitcoin = JSON.parse(response_bitcoin);
+        data = JSON.parse(response_bitcoin);
         const response_icp = await osatsu_sats_backend.get_icp_exchange();
+        // なぞのハイフンが呼び出しを邪魔してエラーになるので置換
         const res = response_icp.replace('-', '_');
         data_icp = JSON.parse(res);
-        console.log("icpJpy::" + data_icp.internet_computer.jpy);
         // data = {bitcoin: {jpy: 4910700.12556, usd: 27122.94946, eur: 25343.19576, last_updated_at: 1695211807}};
-        data = JSON.parse(response_bitcoin);
+        
         
     } catch (err) {
         handleCoinGeckoRequestError(err);
@@ -502,7 +501,7 @@ function getCurrencyText(key, value, baseCurrencyKey) {
 }
 
 // 共有ボタン
-function updateShareButton(btc, sats, jpy, usd, eur) {
+function updateShareButton(btc, sats, jpy, usd, eur, icpJpy) {
     const values = { btc, sats, jpy, usd, eur, icpJpy};
 
     const shareText = generateCopyText(values);
@@ -511,8 +510,10 @@ function updateShareButton(btc, sats, jpy, usd, eur) {
     const links = generateShareLinks(queryParams, shareText);
 
     getDomElementById('share-twitter').href = links.twitter;
-    getDomElementById('share-nostter').href = links.nostter;
-    getDomElementById('share-mass-driver').href = links.massDriver;
+    getDomElementById('share-distrikt').href = links.distrikt;
+    // getDomElementById('share-nostter').href = links.nostter;
+    // getDomElementById('share-mass-driver').href = links.massDriver;
+    
 }
 
 function generateShareLinks(queryParams, shareText) {
@@ -520,12 +521,13 @@ function generateShareLinks(queryParams, shareText) {
     return {
         twitter: `https://twitter.com/share?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`,
         nostter: `https://nostter.vercel.app/post?content=${encodeURIComponent(shareText)}%20${encodeURIComponent(shareUrl)}`,
-        massDriver: `https://mdrv.shino3.net/?intent=${encodeURIComponent(shareText)}%20${encodeURIComponent(shareUrl)}`
+        massDriver: `https://mdrv.shino3.net/?intent=${encodeURIComponent(shareText)}%20${encodeURIComponent(shareUrl)}`,
+        distrikt: `https://distrikt.app/post?content=${encodeURIComponent(shareText)}%20${encodeURIComponent(shareUrl)}`
     };
 }
 
 function setupEventListenersForCurrencyButtons() {
-    ['sats', 'btc', 'jpy', 'usd', 'eur'].forEach(currency => {
+    ['sats', 'btc', 'jpy', 'usd', 'eur', 'icpJpy'].forEach(currency => {
         getDomElementById('copy-' + currency).addEventListener('click', function (event) {
             copySingleCurrencyToClipboardEvent(event);
         });
